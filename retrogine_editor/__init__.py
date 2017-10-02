@@ -7,6 +7,7 @@ from pygame.surface import Surface
 from pygame.rect import Rect
 
 from retrogine_editor.menu_item import MenuItem
+from retrogine_editor.palette_editor import PaletteEditor
 
 
 class Application:
@@ -17,6 +18,7 @@ class Application:
         self.menu_font: pygame.font.Font = None
         self.menu_items: List[MenuItem] = []
         self.states = ['menu']
+        self.palette_editor = None
 
     def run(self):
         pygame.init()
@@ -25,6 +27,7 @@ class Application:
         self.screen = Surface((1280, 720))
 
         self.init_menu()
+        self.palette_editor = PaletteEditor(self.states)
 
         while True:
             for event in pygame.event.get():
@@ -40,6 +43,8 @@ class Application:
 
             if self.states[-1] == 'menu':
                 self.draw_menu()
+            elif self.states[-1] == 'palette_editor':
+                self.palette_editor.draw(self.real_screen, self.screen)
             elif self.states[-1] == 'exit':
                 self.quit()
 
