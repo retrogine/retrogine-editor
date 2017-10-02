@@ -30,6 +30,10 @@ class Application:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.states.append('exit')
+                if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+                    self.states.pop()
+                    if len(self.states) <= 0:
+                        self.states.append('exit')
 
             self.screen.fill((0, 0, 0))
             self.real_screen.fill((0, 0, 0))
