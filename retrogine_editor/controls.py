@@ -120,17 +120,17 @@ class Input(BaseControl):
 
     def draw_control(self):
         if self.focused:
-            self.surface.fill(pygame.Color(50, 50, 255, 255))
+            self.surface.fill(color(50, 50, 255, 255))
         else:
-            self.surface.fill(pygame.Color(0, 0, 0, 255))
+            self.surface.fill(color(0, 0, 0, 255))
         text_area = Rect(self.padding, self.padding, self.dimensions.width - self.padding * 2, self.dimensions.height - self.padding * 2)
-        self.surface.fill(pygame.Color(255, 255, 255, 255), rect=text_area)
+        self.surface.fill(color(255, 255, 255, 255), rect=text_area)
 
         font_area = Rect(self.padding * 2, self.padding * 2, self.dimensions.width - self.padding * 4, self.dimensions.height - self.padding * 4)
         text_to_render = self.text
         if self.focused:
             text_to_render += '|'
-        label = self.font.render(text_to_render, 1, pygame.Color(0, 0, 0, 255))
+        label = self.font.render(text_to_render, 1, color(0, 0, 0, 255))
         self.surface.blit(label, font_area)
 
     def on_focus(self):
@@ -165,3 +165,10 @@ class Input(BaseControl):
             self.set_text(self.text + name)
         else:
             print(name)
+
+
+# noinspection PyArgumentList
+def color(r: int, g: int, b: int, a: int = None):
+    if a is None:
+        return pygame.Color(r, g, b)
+    return pygame.Color(r, g, b, a)
