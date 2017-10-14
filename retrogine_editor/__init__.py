@@ -4,14 +4,13 @@ import sys
 from pygame.surface import Surface
 from pygame.rect import Rect
 
-from retrogine_editor.controls import BaseControl, Input
+from retrogine_editor.controls import *
 
 
 class Application:
     def __init__(self):
         self.real_screen: Surface = None
         self.screen: Surface = None
-        pass
 
     def run(self):
         pygame.init()
@@ -20,7 +19,11 @@ class Application:
         self.screen = Surface((1280, 720))
 
         test1 = Input(self.screen, (10, 10))
-        test2 = Input(self.screen, (10, 35))
+        test2 = Button(self.screen, (10, 45), "Add")
+
+        font = pygame.font.SysFont("monospace", 15)
+        test2.add_on_mouse_click(lambda x, y: submitted_text.append(font.render(test1.get_text(), 1, color(0, 0, 0))))
+        submitted_text = []
 
         while True:
             pygame.event.pump()
@@ -33,6 +36,11 @@ class Application:
 
             test1.handle()
             test2.handle()
+
+            count = 0
+            for text in submitted_text:
+                self.screen.blit(text, Rect(10, (30 * count) + 100, 100, 100))
+                count += 1
 
             real_size = (self.real_screen.get_width(), self.real_screen.get_height())
             self.real_screen.blit(
